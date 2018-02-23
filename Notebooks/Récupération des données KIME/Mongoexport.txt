@@ -1,0 +1,49 @@
+Premier export : depuis la collection metadata -----------------------------------------------------------------------------------------------
+
+
+Fields à récupérer :  
+
+_familyID
+_applications.0._applicationId.0.CC
+_applications.0._applicationId.0.SN
+_applications.0._applicationId.0.KC
+_applications.0._publications.0._publicationRID
+_applications.0._publications.0._publicationId.0.CC
+_applications.0._publications.0._publicationId.0.SN
+_applications.0._publications.0._publicationId.0.KC
+_applications.0._publications.0._title
+_applications.0._publications.0.sections.0.claims.0.text.0.language
+_applications.0._publications.0.sections.0.claims.0.text.0._sectionId
+_applications.0._publications.0.sections.0.claims.0.text.0._version
+_applications.0._publications.0.sections.0.description.0.text.0.language
+_applications.0._publications.0.sections.0.description.0.text.0._sectionId
+_applications.0._publications.0.sections.0.description.0.text.0._version
+_applications.0._publications.0.sections.0.abstract.0.text.0.language
+_applications.0._publications.0.sections.0.abstract.0.text.0._sectionId
+_applications.0._publications.0.sections.0.abstract.0.text.0._version
+
+
+Requête :  
+
+mongoexport --port 27017  -d kimetext -c metadata --fieldFile /home/kevenlemoing/Documents/Data_EPO/fields_kime.txt -q "find({ \$or : [ { "_applications._publications.sections.claims.text.language": { \$eq: "FR" } },{"_applications._publications.sections.description.text.language": { \$eq: "FR" } },{ "_applications._publications.sections.abstract.text.language": { \$eq: "FR" } } ] })" --csv -o /home/kevenlemoing/Documents/Data_EPO/kime_import1.csv
+
+Linux mode :
+
+mongoexport --port 27017  -d kimetext -c metadata --fieldFile /home/kevenlemoing/Documents/Data_EPO/fields_kime2.txt -q '{"_applications._publications.sections.claims.text.language": "FR" } }' --type=csv -o /home/kevenlemoing/Documents/Data_EPO/kime_import1.csv
+
+    With fields:
+    
+        mongoexport --port 27017  -d kimetext -c metadata --fieldFile /home/kevenlemoing/Documents/Data_EPO/fields_kime.txt -q '{"_applications._publications.sections.claims.text.language": "FR" }' --type csv -o /home/kevenlemoing/Documents/Data_EPO/kime_import1.csv
+        
+        mongoexport --port 27017 -d kimetext -c metadata -q '{"_applications._publications.sections.claims.text.language": "FR" }' --type csv -o /home/kevenlemoing/Documents/Data_EPO/kime_import1.csv
+    
+
+mongoexport --port 27017  -d kimetext -c metadata -q '{$or : [{"_applications._publications.sections.claims.text.language" : "FR"},{"_applications._publications.sections.description.text.language" : "FR"},
+{"_applications._publications.sections.abstract.text.language" : "FR"}]}'
+
+Deuxième export : depuis la collection xml -----------------------------------------------------------------------------------------------
+
+
+Requête : 
+
+mongoexport --port 27017  -d kimetext -c xml --csv -o /home/kevenlemoing/Documents/Data_EPO/kime_import2.csv
